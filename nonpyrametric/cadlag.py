@@ -9,7 +9,8 @@ class CadlagStepFunction(object):
         if x in self.lookup:
             return self.lookup[x]
         else:
-            return self._find_nearest_bound(x, self.X, 0, len(self.X)-1)
+            x_nearest = self._find_nearest_bound(x, self.X, 0, len(self.X)-1)
+            return self.lookup[x_nearest]
 
     def _find_nearest_bound(self, x, A, l, r):
         i = int((l+r)/2)
@@ -21,7 +22,7 @@ class CadlagStepFunction(object):
                 return A[-1]
             else:
                 if x < A[i+1]:
-                    return i
+                    return A[i]
                 else:
                     return self._find_nearest_bound(x, A, i+1, r)
         elif x < A[i]:

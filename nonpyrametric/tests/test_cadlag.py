@@ -29,3 +29,11 @@ class CadlagStepFunctionTest(unittest.TestCase):
         f = cadlag.CadlagStepFunction(X, Y)
         self.assertEqual(f(5), 2)
         self.assertEqual(f(-1), 0)
+
+    def test_binary_cdf(self):
+        X = [0, 1]
+        Y = [0.5, 1.0]
+        f = cadlag.CadlagStepFunction(X, Y)
+        self.assertEqual(f(0), 0.5)
+        self.assertEqual(f(0.5), 0.5)
+        self.assertEqual(f(1), 1.0)
