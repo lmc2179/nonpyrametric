@@ -14,7 +14,7 @@ class CadlagStepFunction(object):
 
     def _find_nearest_bound(self, x, A, l, r):
         i = int((l+r)/2)
-        print(l, i, r, x, A[i])
+        # print(l, i, r, x, A[i])
         if x == A[i]:
             return A[i]
         if x > A[i]:
