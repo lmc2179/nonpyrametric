@@ -5,6 +5,8 @@ python:
   - "3.4"
   - "3.5"
 # command to install dependencies
-install: "pip install ."
+install:
+  - pip install .
+  - pip install scipy
 # command to run tests
 script: "nosetests nonpyrametric/tests"
