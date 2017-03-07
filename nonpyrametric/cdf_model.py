@@ -21,7 +21,7 @@ class CDFModel(object):
     def cdf_ci(self, x, alpha=0.05):
         eps = sqrt((1/(2*self.n))*log(2/alpha))
         y = self.cdf(x)
-        return y - eps, y + eps
+        return max(y - eps, 0), min(y + eps, 1)
 
     def plot(self, alpha=0.05):
         pass
