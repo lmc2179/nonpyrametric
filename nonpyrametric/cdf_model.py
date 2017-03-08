@@ -19,7 +19,7 @@ class CDFModel(object):
         return self.empirical_cdf_function(x)
 
     def cdf_ci(self, x, alpha=0.05):
-        eps = sqrt((1/(2*self.n))*log(2/alpha))
+        eps = sqrt((1./(2*self.n))*log(2/alpha))
         y = self.cdf(x)
         return max(y - eps, 0), min(y + eps, 1)
 
