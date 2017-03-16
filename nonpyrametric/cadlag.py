@@ -5,6 +5,12 @@ class CadlagStepFunction(object):
         if invertible:
             self.inverse = CadlagStepFunction(Y, X, invertible=False)
 
+    def get_X(self):
+        return self.X
+
+    def get_Y(self):
+        return self.Y
+
     def __call__(self, x):
         if x in self.lookup:
             return self.lookup[x]

@@ -24,3 +24,12 @@ class CDFModelTest(unittest.TestCase):
             self.assertGreaterEqual(low, 0)
             self.assertGreater(high, true_val)
             self.assertLessEqual(high, 1)
+
+    def test_ci_mean_bernoulli(self):
+        X = [0]*100 + [1]*100
+        m = CDFModel()
+        m.fit(X)
+        self.assertEqual(m.mean(), 0.5)
+        low, high = m.mean_ci(0.05)
+        self.assertLess(low, 0.5)
+        self.assertGreater(high, 0.5)

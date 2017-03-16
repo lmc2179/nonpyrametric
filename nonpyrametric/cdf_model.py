@@ -31,3 +31,13 @@ class CDFModel(object):
 
     def inv_cdf(self, X):
         pass
+
+    def mean(self):
+        X = self.empirical_cdf_function.get_X()
+        return sum([1 - self.cdf(X[i])*(X[i+1]-X[i]) for i in range(len(X)-1)])
+
+    def mean_ci(self, alpha=0.05):
+        X = self.empirical_cdf_function.get_X()
+        bases = [(X[i+1]-X[i]) for i in range(len(X)-1)]
+        low, high = zip(*[self.cdf_ci(X[i], alpha) for i in range(len(X)-1)])
+        return sum([l*base for l, base in zip(low, bases)]), sum([h*base for h, base in zip(high, bases)])
