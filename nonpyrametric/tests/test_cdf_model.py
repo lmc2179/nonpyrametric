@@ -26,10 +26,43 @@ class CDFModelTest(unittest.TestCase):
             self.assertLessEqual(high, 1)
 
     def test_ci_mean_bernoulli(self):
-        X = [0]*100 + [1]*100
+        X = [0]*100 + [1]*400
+        TRUE_MEAN = 0.8
         m = CDFModel()
         m.fit(X)
-        self.assertEqual(m.mean(), 0.5)
+        self.assertEqual(m.mean(), TRUE_MEAN)
         low, high = m.mean_ci(0.05)
-        self.assertLess(low, 0.5)
-        self.assertGreater(high, 0.5)
+        self.assertLess(low, TRUE_MEAN)
+        self.assertGreater(high, TRUE_MEAN)
+
+    def test_ci_mean_multinoulli(self):
+        X = [0]*100 + [1]*300 + [2]*100
+        TRUE_MEAN = 1*.6 + 2*.2
+        m = CDFModel()
+        m.fit(X)
+        self.assertEqual(m.mean(), TRUE_MEAN)
+        low, high = m.mean_ci(0.05)
+        self.assertLess(low, TRUE_MEAN)
+        self.assertGreater(high, TRUE_MEAN)
+
+    def test_ci_mean_uniform_nonnegative(self):
+        X = np.random.uniform(0, 1, 100)
+        TRUE_MEAN = 0.5
+        EMPIRICAL_MEAN = np.mean(X)
+        m = CDFModel()
+        m.fit(X)
+        self.assertAlmostEqual(m.mean(), EMPIRICAL_MEAN, places=1)
+        low, high = m.mean_ci(0.05)
+        self.assertLess(low, TRUE_MEAN)
+        self.assertGreater(high, TRUE_MEAN)
+
+    def test_ci_mean_uniform(self):
+        X = np.random.uniform(-1, 1, 100)
+        TRUE_MEAN = 0
+        EMPIRICAL_MEAN = np.mean(X)
+        m = CDFModel()
+        m.fit(X)
+        self.assertAlmostEqual(m.mean(), EMPIRICAL_MEAN, places=1)
+        low, high = m.mean_ci(0.05)
+        self.assertLess(low, TRUE_MEAN)
+        self.assertGreater(high, TRUE_MEAN)

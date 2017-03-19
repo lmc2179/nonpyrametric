@@ -1,6 +1,6 @@
 from nonpyrametric import cdf_model
 import numpy as np
-from scipy.stats import norm
+from scipy.stats import norm, expon
 from matplotlib import pyplot as plt
 import seaborn as sns
 from tqdm import tqdm
@@ -9,6 +9,9 @@ from pprint import pprint
 normal_rvs = np.random.normal(0, 1, 100)
 m = cdf_model.CDFModel()
 m.fit(normal_rvs)
+print('Empirical mean:', np.mean(normal_rvs))
+print('Estimated mean:', m.mean())
+print('Estimated mean CI:', m.mean_ci(0.95))
 X = np.linspace(-2, 2)
 true_cdf = [norm.cdf(x, 0, 1) for x in X]
 low, high = zip(*tqdm([m.cdf_ci(x, alpha=0.01) for x in X]))

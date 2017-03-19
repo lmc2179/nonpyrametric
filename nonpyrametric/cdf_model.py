@@ -34,10 +34,12 @@ class CDFModel(object):
 
     def mean(self):
         X = self.empirical_cdf_function.get_X()
-        return sum([1 - self.cdf(X[i])*(X[i+1]-X[i]) for i in range(len(X)-1)])
+        return sum([(int(X[i] >= 0) - self.cdf(X[i]))*(X[i+1]-X[i]) for i in range(len(X)-1)])
 
     def mean_ci(self, alpha=0.05):
         X = self.empirical_cdf_function.get_X()
         bases = [(X[i+1]-X[i]) for i in range(len(X)-1)]
+        left_sides = [X[i] for i in range(len(X)-1)]
         low, high = zip(*[self.cdf_ci(X[i], alpha) for i in range(len(X)-1)])
-        return sum([l*base for l, base in zip(low, bases)]), sum([h*base for h, base in zip(high, bases)])
+        return sum([(int(left >= 0) - h)*base for h, base, left in zip(high, bases, left_sides)]), \
+               sum([(int(left >= 0) - l)*base for l, base, left in zip(low, bases, left_sides)])
