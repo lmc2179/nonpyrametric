@@ -17,6 +17,8 @@ print('Empirical mean:', np.mean(df[SUNSPOTS_MONTH]))
 print('Estimated mean:', m.mean())
 print('Estimated mean CI-95:', m.mean_ci(0.05))
 print('Estimated mean CI-99:', m.mean_ci(0.01))
+print('Likelihood of < 30 occurrences (CI-95):', m.cdf_ci(30, 0.05))
+print('Quartiles:', )
 X = np.linspace(0, max(df[SUNSPOTS_MONTH]))
 low, high = zip(*tqdm([m.cdf_ci(x, alpha=0.01) for x in X]))
 approx_cdf = [m.cdf(x) for x in X]
