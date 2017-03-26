@@ -4,6 +4,8 @@ class CadlagStepFunction(object):
         self.X, self.Y = zip(*sorted(zip(X, Y)))
         if invertible:
             self.inverse = CadlagStepFunction(Y, X, invertible=False)
+        else:
+            self.inverse = None
 
     def get_X(self):
         return self.X

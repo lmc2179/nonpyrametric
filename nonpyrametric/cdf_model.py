@@ -26,8 +26,8 @@ class CDFModel(object):
     def plot(self, alpha=0.05):
         pass
 
-    def quantile(self, X):
-        pass
+    def quantile(self, q):
+        return self.empirical_cdf_function.inverse(q)
 
     def inv_cdf(self, X):
         pass
